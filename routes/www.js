@@ -31,8 +31,15 @@ var uploading = multer({
 // });
 
 
-router.get('/', function (req, res, next) {
-  
+
+
+router.all('*', function (req, res, next) {
+  console.log(req);
+  log.info('log', {
+    body: req.body,
+    query: req.query,
+    cookies: req.cookies
+  });
   res.send({
     body: req.body,
     query: req.query,
