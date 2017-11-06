@@ -1,0 +1,5 @@
+{
+	"port": 3030,
+	"url": "/myWebHookTest" ,
+	"scriptFile": "pull.sh"
+}

@@ -7,12 +7,22 @@
 var app = require('../app');
 var debug = require('debug')('webHooker:server');
 var http = require('http');
-
+var fs = require('fs');
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '80');
+try {
+  global.config = JSON.parse(fs.readFileSync('config.json'));
+}
+catch (err) {
+  console.log('\x1b[31m', '\n=========='
+    + '\nCreate a config.json file in the top directory of your current project.'
+    + '\nSee https://github.com/honeymaro/webHooker.'
+    + '\n==========');
+  process.exit();
+}
+var port = normalizePort(global.config.port);
 app.set('port', port);
 
 /**
@@ -26,6 +36,8 @@ var server = http.createServer(app);
  */
 
 server.listen(port);
+console.log("Git web hooker is running on port", global.config.port);
+console.log("If you want to change the port, open config.json.");
 server.on('error', onError);
 server.on('listening', onListening);
 
